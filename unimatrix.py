@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # unimatrix.py
-# <https://github.com/will8211/unimatrix>
+# <https://github.com/petaflot/unimatrix>
 #
 # Python script to simulate the display from "The Matrix" in terminal. Uses
 # half-width katakana unicode characters by default, but can use custom

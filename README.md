@@ -2,25 +2,27 @@
 
 Python script to simulate the display from "The Matrix" in terminal. Uses half-width katakana unicode characters by default, but can use custom character sets. Accepts keyboard controls while running.
 
-Based on CMatrix by Chris Allegretta and Abishek V. Ashok. The following option should produce virtually the same output as CMatrix:
+Merges some pull requests ignored by original maintainer will8211 of UniMatrix, itself based on CMatrix by Chris Allegretta and Abishek V. Ashok. The following option should produce virtually the same output as CMatrix:
 ```
 $ unimatrix -n -s 96 -l o
 ```
 ## Install
 
-Linux users can use curl to install:
+Cloning the repos is good, since it gives you Klingon fonts (they shouldn't really be here, but since they are...)
+
+Linux users can also use curl to install:
 ```
-sudo curl -L https://raw.githubusercontent.com/will8211/unimatrix/master/unimatrix.py -o /usr/local/bin/unimatrix
+sudo curl -L https://raw.githubusercontent.com/petaflot/unimatrix/master/unimatrix.py -o /usr/local/bin/unimatrix
 sudo chmod a+rx /usr/local/bin/unimatrix
 ```
 If you do not have curl, you can alternatively use a recent wget:
 ```
-sudo wget https://raw.githubusercontent.com/will8211/unimatrix/master/unimatrix.py -O /usr/local/bin/unimatrix
+sudo wget https://raw.githubusercontent.com/petaflot/unimatrix/master/unimatrix.py -O /usr/local/bin/unimatrix
 sudo chmod a+rx /usr/local/bin/unimatrix
 ```
 You can also install it with pip:
 ```
-pip install git+https://github.com/will8211/unimatrix.git
+pip install git+https://github.com/petaflot/unimatrix.git
 ```
 
 Users of Arch-based distros can get it from the AUR as ```unimatrix-git```, although it might not be the most recent version.

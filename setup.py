@@ -8,8 +8,8 @@ with codecs.open('README.md', 'r', 'utf-8') as f:
 
 setup(
         name='unimatrix',
-        url='https://github.com/will8211/unimatrix',
-        author='William Mannard',
+        url='https://github.com/petaflot/unimatrix',
+        author='William Mannard, JCZD',
         description='Python script to simulate the display from "The Matrix" in terminal',
         long_description=readme,
         use_scm_version=True,

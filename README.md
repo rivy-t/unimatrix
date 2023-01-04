@@ -1,14 +1,14 @@
 # UniMatrix
 
-Python script to simulate the display from "The Matrix" in terminal. Uses half-width katakana unicode characters by default, but can use custom character sets. Accepts keyboard controls while running.
+Python script to emulate some display from "Ghost in the Shell" (also featured in "The Matrix") in a terminal. Uses Braille unicode characters by default, but can use custom character sets. Accepts keyboard controls while running.
 
 Merges some pull requests ignored by original maintainer will8211 of UniMatrix, itself based on CMatrix by Chris Allegretta and Abishek V. Ashok. The following option should produce virtually the same output as CMatrix:
 ```
-$ unimatrix -n -s 96 -l o
+$ unimatrix -n -l o
 ```
 ## Install
 
-Cloning the repos is good, since it gives you Klingon fonts (they shouldn't really be here, but since they are...)
+Cloning the repos is good, since it gives you Klingon fonts (they shouldn't really be here, but since they are... must be installed manually to `/usr/sharefonts/klingon/`)
 
 Linux users can also use curl to install:
 ```

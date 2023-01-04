@@ -194,7 +194,7 @@ parser.add_argument('-o', '--status-off',
                     help='Disable on-screen status')
 parser.add_argument('-s', '--speed',
                     help='speed, integer up to 100. Default=85',
-                    default=85,
+                    default=97,
                     type=int)
 parser.add_argument('-t', '--time',
                     help='time. See details below',
@@ -291,7 +291,7 @@ elif args.custom_characters:
 
 # Neither "-l" nor "-u" has been set, use default characters
 else:
-    chars = char_set['m']
+    chars = char_set['B']
 
 if args.no_bold:
     args.all_bold = False
@@ -628,7 +628,7 @@ class Writer:
         """
         y = node.y_coord
         x = node.x_coord
-        character = ' '
+        character = ' ' # TODO should be first char in set.. Braille[0x00] is white whitespace!!
         attr = self.get_attr(node)
         color = curses.color_pair(1)
         if node.n_type == 'writer':

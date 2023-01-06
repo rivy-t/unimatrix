@@ -23,11 +23,16 @@
 #
 # Created by William Mannard
 # 2018/01/19
+#
+# TODO enable LTR, RTL, BTT variants
+# TODO read strings from external command (ie. fortune [line-based/scroll], cowsay[matrix-based/overlay])
+# TODO update balancing algorithm : currently uses way too much memory (setting PRODUCT=False sort-of works around that)
 
 import argparse
 import curses
 import time
 from random import choice, randint
+from numpy import product
 
 help_msg = '''
 USAGE
@@ -43,6 +48,7 @@ OPTIONAL ARGUMENTS
                        magenta, black
 
   -f                   Enable "flashers," characters that continuously change.
+                       TODO set frequency
 
   -g COLOR             Background color (See -c). Defaults to keeping
                        terminal's current background.
@@ -163,7 +169,7 @@ EXAMPLES
 parser = argparse.ArgumentParser(add_help=False)
 
 parser.add_argument('-a', '--asynchronous',
-                    action='store_true',
+                    action='store_false',
                     help='use asynchronous scrolling')
 parser.add_argument('-b', '--all-bold',
                     action='store_true',
@@ -218,7 +224,6 @@ if args.help:
     exit()
 
 char_set = {
-
     'a': 'qwertyuiopasdfghjklzxcvbnm',
     'A': 'QWERTYUIOPASDFGHJKLZXCVBNM',
     'B': '⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⡸⣘⣸⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾⠁⢁⠡⢡⠑⢑⠱⠉⢉⠩⢩⠙⢙⠹⢱⢹⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿',
@@ -239,13 +244,9 @@ char_set = {
     'R': 'MCCLLLXXXXVVVVVIIIIII',
     's': '-=*_+|:<>"',
     'S': '`-=~!@#$%^&*()_+[]{}|\;\':",./<>?"',
-    'u': args.custom_characters}
-
-zhcn_chars=""
-for ch in range(0x4e00, 0x9fa6): 
-    zhcn_chars += chr(ch)
-#    zhcn_chars +=" "
-char_set["z"]=zhcn_chars
+    'u': args.custom_characters,
+    'z': ''.join( [chr(ch) for ch in range(0x4e00, 0x9fa6)] ),
+}
 
 colors_str = {
     'green': curses.COLOR_GREEN,
@@ -276,10 +277,14 @@ if args.time:
 
 # "-l" option has been used
 if args.character_list:
-    chars = ''
+    chars = []
+
+    # balanced repartition (frequency normalization)
+    bal = product( [len(char_set[letter]) for letter in args.character_list] )
+
     for letter in args.character_list:
         try:
-            chars += char_set[letter]
+            chars.append( char_set[letter] )
         except KeyError:
             print("Letter '%s' does not represent a valid character list."
                   % letter)
@@ -297,7 +302,6 @@ if args.no_bold:
     args.all_bold = False
 
 chars_len = len(chars) - 1
-
 
 ### Classes
 
@@ -603,7 +607,7 @@ class Writer:
         """
         Returns a random character from the active character set
         """
-        return chars[randint(0, chars_len)]
+        return choice(choice(chars))
 
     @staticmethod
     def get_attr(node, above=False):

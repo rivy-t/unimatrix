@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "unimatrix"
+description = 'Python script to simulate the display from "The Matrix" in terminal'
+authors = ["William Mannard", "JCZD"]
+readme = "README.md"
+version = "1.0"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "^1"
+windows-curses = { version = "^2.2", markers = "sys_platform == 'win32'" }
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+unimatrix = 'unimatrix:main'
